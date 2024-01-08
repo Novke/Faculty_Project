@@ -20,5 +20,7 @@ public class Department {
     private String shortName;
     @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
     private List<Subject> subjects;
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+    private List<Member> members;
 
 }
