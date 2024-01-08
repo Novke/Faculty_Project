@@ -14,9 +14,14 @@ public class Member {
     private long id;
     private String firstname;
     private String lastname;
-    //academic title
-    //education title
-    //scientific field
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    private AcademicTitle academicTitle;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    private EducationTitle educationTitle;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    private ScientificField scientificField;
+
     @JoinColumn(name = "department_id")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Department department;
