@@ -12,11 +12,11 @@ public class Subject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    private long id;
 
-    String name;
-    int espb;
+    private String name;
+    private int espb;
     @JoinColumn(name = "department_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    Department department;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    private Department department;
 }

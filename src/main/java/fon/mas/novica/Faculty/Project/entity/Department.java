@@ -13,12 +13,12 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    private long id;
     @Column
-    String name;
+    private String name;
     @Column(name = "short_name", unique = true)
-    String shortName;
+    private String shortName;
     @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
-    List<Subject> subjects;
+    private List<Subject> subjects;
 
 }
