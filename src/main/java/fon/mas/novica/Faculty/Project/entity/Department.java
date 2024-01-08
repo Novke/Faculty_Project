@@ -22,5 +22,13 @@ public class Department {
     private List<Subject> subjects;
     @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
     private List<Member> members;
+    @OneToOne
+    private Member manager;
+    @OneToOne
+    private Member secretary;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<SecretaryMandate> secretaryHistory;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<ManagerMandate> managerHistory;
 
 }
