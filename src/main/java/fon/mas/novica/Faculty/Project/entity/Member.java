@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -30,4 +31,8 @@ public class Member {
     @JoinColumn(name = "department_id")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Department department;
+
+    //TODO: check
+    @Enumerated(EnumType.STRING)
+    private Set<LectureForm> canLecture;
 }
