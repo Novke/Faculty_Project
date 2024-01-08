@@ -1,6 +1,8 @@
 package fon.mas.novica.Faculty.Project.controller;
 
+import fon.mas.novica.Faculty.Project.entity.Department;
 import fon.mas.novica.Faculty.Project.entity.Subject;
+import fon.mas.novica.Faculty.Project.service.DepartmentService;
 import fon.mas.novica.Faculty.Project.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.io.FileNotFoundException;
 public class SubjectController {
 
     private final SubjectService subjectService;
+    private final DepartmentService departmentService;
 
     @GetMapping
     ResponseEntity<?> getAll(){
@@ -25,12 +28,18 @@ public class SubjectController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createSubject(@RequestBody Subject subject){
+    public ResponseEntity<?> createSubject(@RequestBody Subject subject) throws FileNotFoundException {
+        Department department = departmentService.findById(subject.getDepartment().getId()); //baca exc ako ne postoji dept
+        subject.setDepartment(department);
+
         return ResponseEntity.ok(subjectService.create(subject));
     }
 
     @PutMapping
     public ResponseEntity<?> editSubject(@RequestBody Subject subject) throws FileNotFoundException {
+        Department department = departmentService.findById(subject.getDepartment().getId()); //baca exc ako ne postoji dept
+        subject.setDepartment(department);
+
         return ResponseEntity.ok(subjectService.edit(subject));
     }
 
