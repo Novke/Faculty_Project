@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -32,7 +31,6 @@ public class Member {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Department department;
 
-    //TODO: check
-    @Enumerated(EnumType.STRING)
-    private Set<LectureForm> canLecture;
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Engagement> engagements;
 }

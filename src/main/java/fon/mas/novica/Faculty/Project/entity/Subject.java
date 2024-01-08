@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -19,4 +21,6 @@ public class Subject {
     @JoinColumn(name = "department_id")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Department department;
+    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY)
+    private List<Engagement> lecturers;
 }
