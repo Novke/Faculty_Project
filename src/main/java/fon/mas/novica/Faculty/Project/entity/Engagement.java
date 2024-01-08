@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,6 +15,7 @@ public class Engagement {
     @Id
     @GeneratedValue
     private long id;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Member member;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -22,4 +24,6 @@ public class Engagement {
     //TODO: check
     @Enumerated(EnumType.STRING)
     private Set<LectureForm> lectureForms;
+    @OneToMany(mappedBy = "engagement", fetch = FetchType.LAZY)
+    private List<Lecture> lectures;
 }
