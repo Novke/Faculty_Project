@@ -2,6 +2,7 @@ package fon.mas.novica.Faculty.Project.service;
 
 import fon.mas.novica.Faculty.Project.entity.Department;
 import fon.mas.novica.Faculty.Project.repository.DepartmentRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class DepartmentService {
 
