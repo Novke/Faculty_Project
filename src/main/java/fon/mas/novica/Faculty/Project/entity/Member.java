@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -21,6 +23,9 @@ public class Member {
     private EducationTitle educationTitle;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private ScientificField scientificField;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<MemberTitle> titleHistory;
 
     @JoinColumn(name = "department_id")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
