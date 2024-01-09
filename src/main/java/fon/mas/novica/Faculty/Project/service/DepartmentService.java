@@ -1,12 +1,16 @@
 package fon.mas.novica.Faculty.Project.service;
 
 import fon.mas.novica.Faculty.Project.entity.Department;
+import fon.mas.novica.Faculty.Project.entity.ManagerMandate;
+import fon.mas.novica.Faculty.Project.entity.Member;
 import fon.mas.novica.Faculty.Project.repository.DepartmentRepository;
+import fon.mas.novica.Faculty.Project.repository.ManagerMandateRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +20,7 @@ import java.util.Optional;
 public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
+    private final ManagerMandateRepository managerMandateRepository;
 
     public List<Department> findAll() {
         return departmentRepository.findAll();
@@ -43,5 +48,17 @@ public class DepartmentService {
         findById(departmentId);
 
         departmentRepository.deleteById(departmentId);
+    }
+
+    public void assignNewManager(Department department, Member member) {
+        department.setManager(member);
+
+        ManagerMandate newMandate = new ManagerMandate();
+        newMandate.setDepartment(department);
+        newMandate.setManager(member);
+        newMandate.setStartDate(LocalDate.now());
+
+        department.getManagerHistory().add(newMandate);
+        departmentRepository.save(department); //cuva preko cascade
     }
 }

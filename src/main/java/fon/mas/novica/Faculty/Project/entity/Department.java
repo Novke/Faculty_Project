@@ -31,7 +31,7 @@ public class Department {
     private Member secretary;
     @OneToMany(fetch = FetchType.LAZY)
     private List<SecretaryMandate> secretaryHistory;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ManagerMandate> managerHistory;
 
 }
