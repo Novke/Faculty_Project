@@ -1,6 +1,8 @@
 package fon.mas.novica.Faculty.Project.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import fon.mas.novica.Faculty.Project.serialization.serializers.DepartmentSerializer;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonSerialize(using = DepartmentSerializer.class)
 public class Department {
 
     @Id
