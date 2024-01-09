@@ -1,7 +1,7 @@
 package fon.mas.novica.Faculty.Project.controller;
 
 import fon.mas.novica.Faculty.Project.entity.ScientificField;
-import fon.mas.novica.Faculty.Project.repository.ScientificFieldRepository;
+import fon.mas.novica.Faculty.Project.service.ScientificFieldService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ScientificFieldController {
 
-    private final ScientificFieldRepository scientificFieldRepository;
+    private final ScientificFieldService scientificFieldService;
 
     @PostMapping
     public ResponseEntity<?> createScientificField(@RequestBody ScientificField scientificField){
-        return ResponseEntity.ok(scientificFieldRepository.save(scientificField));
+        return ResponseEntity.ok(scientificFieldService.save(scientificField));
     }
 
     @GetMapping
     public ResponseEntity<?> getAll(){
-        return ResponseEntity.ok(scientificFieldRepository.findAll());
+        return ResponseEntity.ok(scientificFieldService.findAll());
     }
 }

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ScientificFieldRepository extends JpaRepository<ScientificField, Long> {
+
+    public ScientificField findByName(String name);
 }
