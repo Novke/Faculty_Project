@@ -33,4 +33,6 @@ public class Member {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Engagement> engagements;
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<AcademicTitleHistory> academicTitles;
 }
