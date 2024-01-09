@@ -29,7 +29,7 @@ public class Department {
     private Member manager;
     @OneToOne
     private Member secretary;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<SecretaryMandate> secretaryHistory;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ManagerMandate> managerHistory;

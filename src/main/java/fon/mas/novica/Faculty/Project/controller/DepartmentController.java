@@ -52,4 +52,12 @@ public class DepartmentController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping(path = "/{id}/secretary")
+    public ResponseEntity<?> assignNewsecretary(@RequestBody Member member, @PathVariable Long id) throws FileNotFoundException {
+        Department department = departmentService.findById(id);
+        Member vracenMember = memberService.findById(member.getId());
+        departmentService.assignNewSecretary(department, vracenMember);
+        return ResponseEntity.ok().build();
+    }
+
 }

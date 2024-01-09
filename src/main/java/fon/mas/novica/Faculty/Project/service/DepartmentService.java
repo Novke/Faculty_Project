@@ -3,6 +3,7 @@ package fon.mas.novica.Faculty.Project.service;
 import fon.mas.novica.Faculty.Project.entity.Department;
 import fon.mas.novica.Faculty.Project.entity.ManagerMandate;
 import fon.mas.novica.Faculty.Project.entity.Member;
+import fon.mas.novica.Faculty.Project.entity.SecretaryMandate;
 import fon.mas.novica.Faculty.Project.repository.DepartmentRepository;
 import fon.mas.novica.Faculty.Project.repository.ManagerMandateRepository;
 import jakarta.transaction.Transactional;
@@ -20,7 +21,6 @@ import java.util.Optional;
 public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
-    private final ManagerMandateRepository managerMandateRepository;
 
     public List<Department> findAll() {
         return departmentRepository.findAll();
@@ -59,6 +59,18 @@ public class DepartmentService {
         newMandate.setStartDate(LocalDate.now());
 
         department.getManagerHistory().add(newMandate);
+        departmentRepository.save(department); //cuva preko cascade
+    }
+
+    public void assignNewSecretary(Department department, Member member){
+        department.setSecretary(member);
+
+        SecretaryMandate newMandate = new SecretaryMandate();
+        newMandate.setDepartment(department);
+        newMandate.setSecretary(member);
+        newMandate.setStartDate(LocalDate.now());
+
+        department.getSecretaryHistory().add(newMandate);
         departmentRepository.save(department); //cuva preko cascade
     }
 }
