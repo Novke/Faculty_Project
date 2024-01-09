@@ -1,7 +1,7 @@
 package fon.mas.novica.Faculty.Project.controller;
 
 import fon.mas.novica.Faculty.Project.entity.AcademicTitle;
-import fon.mas.novica.Faculty.Project.repository.AcademicTitleRepository;
+import fon.mas.novica.Faculty.Project.service.AcademicTitleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AcademicTitleController {
 
-    private final AcademicTitleRepository academicTitleRepository;
+    private final AcademicTitleService academicTitleService;
 
     @PostMapping
     public ResponseEntity<?> createAcademicTitle(@RequestBody AcademicTitle academicTitle){
-        return ResponseEntity.ok(academicTitleRepository.save(academicTitle));
+        return ResponseEntity.ok(academicTitleService.save(academicTitle));
     }
 
     @GetMapping
     public ResponseEntity<?> getAll(){
-        return ResponseEntity.ok(academicTitleRepository.findAll());
+        return ResponseEntity.ok(academicTitleService.findAll());
     }
 }

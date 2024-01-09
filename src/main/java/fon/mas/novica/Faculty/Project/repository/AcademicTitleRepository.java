@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AcademicTitleRepository extends JpaRepository<AcademicTitle, Long> {
+
+    public AcademicTitle findByName(String name);
+
 }
