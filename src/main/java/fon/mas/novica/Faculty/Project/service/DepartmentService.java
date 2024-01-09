@@ -5,7 +5,6 @@ import fon.mas.novica.Faculty.Project.entity.ManagerMandate;
 import fon.mas.novica.Faculty.Project.entity.Member;
 import fon.mas.novica.Faculty.Project.entity.SecretaryMandate;
 import fon.mas.novica.Faculty.Project.repository.DepartmentRepository;
-import fon.mas.novica.Faculty.Project.repository.ManagerMandateRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
