@@ -1,7 +1,9 @@
 package fon.mas.novica.Faculty.Project.service;
 
+import fon.mas.novica.Faculty.Project.entity.AcademicTitle;
 import fon.mas.novica.Faculty.Project.entity.AcademicTitleHistory;
 import fon.mas.novica.Faculty.Project.entity.Member;
+import fon.mas.novica.Faculty.Project.entity.ScientificField;
 import fon.mas.novica.Faculty.Project.repository.AcademicTitleHistoryRepository;
 import fon.mas.novica.Faculty.Project.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +40,8 @@ public class MemberService {
 
         if (member.getAcademicTitles() == null || member.getAcademicTitles().isEmpty()){
             AcademicTitleHistory titleHistory = new AcademicTitleHistory(member, member.getAcademicTitle(), member.getScientificField());
-            member.setAcademicTitles(List.of(academicTitleHistoryRepository.save(titleHistory)));
+//            member.setAcademicTitles(List.of(academicTitleHistoryRepository.save(titleHistory)));
+            member.setAcademicTitles(List.of(titleHistory));
         }
 
         return memberRepository.save(member);
@@ -46,7 +50,7 @@ public class MemberService {
     public Member edit(Member member) throws FileNotFoundException {
         findById(member.getId());
 
-        AcademicTitleHistory lastTitle = academicTitleHistoryRepository.findByMemberSortByStartDateDesc(member).get(0);
+        AcademicTitleHistory lastTitle = academicTitleHistoryRepository.findByMemberOrderByStartDateDescIdDesc(member).get(0);
         lastTitle.setScientificField(member.getScientificField());
         lastTitle.setAcademicTitle(member.getAcademicTitle());
 
@@ -57,6 +61,25 @@ public class MemberService {
         findById(memberId);
 
         memberRepository.deleteById(memberId);
+    }
+
+    public Member promoteAcademicTitle(Member member, ScientificField newField, AcademicTitle newTitle) throws FileNotFoundException {
+        Member vracenMember = findById(member.getId());
+
+        if (vracenMember.getAcademicTitle().getId() == newTitle.getId()) throw new IllegalArgumentException("Can't promote member to same academic title");
+
+        List<AcademicTitleHistory> titles = academicTitleHistoryRepository.findByMemberOrderByStartDateDescIdDesc(vracenMember);
+        AcademicTitleHistory lastTitle = titles.get(0);
+        lastTitle.setEndDate(LocalDate.now());
+
+//        if (newField == null) newField = vracenMember.getScientificField(); //NEMA POTREBE SVAKAKO JE newField IZVUCEN IZ BAZE
+
+        AcademicTitleHistory newTitleHistory = new AcademicTitleHistory(vracenMember, newTitle, newField);
+        vracenMember.setAcademicTitle(newTitle);
+        vracenMember.setScientificField(newField);
+        vracenMember.getAcademicTitles().add(newTitleHistory); //Cuva se preko cascade-a
+
+        return memberRepository.save(vracenMember);
     }
 
 }

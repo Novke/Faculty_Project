@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface AcademicTitleHistoryRepository extends JpaRepository<AcademicTitleHistory, Long> {
 
-    public List<AcademicTitleHistory> findByMemberSortByStartDateDesc(Member member);
+    public List<AcademicTitleHistory> findByMemberOrderByStartDateDescIdDesc(Member member);
 }

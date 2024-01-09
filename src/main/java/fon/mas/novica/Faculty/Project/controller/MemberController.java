@@ -54,4 +54,12 @@ public class MemberController {
         memberService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping(path = "/promote")
+    public ResponseEntity<?> promoteMemberTitle(@RequestBody AcademicTitleHistory ac) throws FileNotFoundException {
+        ScientificField vracenScField = scientificFieldService.find(ac.getScientificField());
+        AcademicTitle vracenAcTitle = academicTitleService.find(ac.getAcademicTitle());
+        Member vracenMember = memberService.findById(ac.getMember().getId());
+        return ResponseEntity.ok(memberService.promoteAcademicTitle(vracenMember, vracenScField, vracenAcTitle));
+    }
 }
