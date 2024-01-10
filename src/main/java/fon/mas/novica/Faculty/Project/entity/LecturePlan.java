@@ -23,4 +23,8 @@ public class LecturePlan {
     private int predavanja;
     private int laboratorija;
 
+    public boolean isSet(){
+        return vezbe>0 || predavanja>0 || laboratorija>0;
+    }
+
 }
