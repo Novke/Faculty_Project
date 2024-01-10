@@ -1,6 +1,9 @@
 package fon.mas.novica.Faculty.Project.service;
 
+import fon.mas.novica.Faculty.Project.entity.Department;
 import fon.mas.novica.Faculty.Project.entity.Engagement;
+import fon.mas.novica.Faculty.Project.entity.Member;
+import fon.mas.novica.Faculty.Project.entity.Subject;
 import fon.mas.novica.Faculty.Project.repository.EngagementRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -46,5 +49,21 @@ public class EngagementService {
         Engagement engagement = findById(engagementId);
 
         engagementRepository.delete(engagement);
+    }
+
+    public List<Engagement> findAllByMemberAndYear(Member member, int year){
+        return engagementRepository.findAllByMemberAndYear(member, year);
+    }
+
+    public List<Engagement> findAllBySubjectAndYear(Subject subject, int year){
+        return engagementRepository.findAllBySubjectAndYear(subject, year);
+    }
+
+    public List<Engagement> findAllBySubjectMemberYear(Subject subject, Member member, int year){
+        return engagementRepository.findAllBySubjectAndMemberAndYear(subject, member, year);
+    }
+
+    public List<Engagement> findAllByDepartmentAndYear(Department department, int year){
+        return engagementRepository.findAllBySubjectDepartmentAndYear(department, year);
     }
 }
