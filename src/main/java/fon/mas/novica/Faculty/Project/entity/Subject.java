@@ -31,4 +31,8 @@ public class Subject {
     public void createLecturePlan(int pred, int vezbe, int lab){
         lecturePlan = new LecturePlan(this, vezbe, pred, lab);
     }
+    public void setLecturePlan(LecturePlan lecturePlan){
+        lecturePlan.setSubject(this);
+        this.lecturePlan = lecturePlan;
+    }
 }

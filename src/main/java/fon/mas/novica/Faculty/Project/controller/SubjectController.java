@@ -48,4 +48,9 @@ public class SubjectController {
         subjectService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/plan")
+    public ResponseEntity<?> updateLecturePlan(@RequestBody Subject subject) throws FileNotFoundException {
+        return ResponseEntity.ok(subjectService.updateLecturePlan(subject.getId(), subject.getLecturePlan()));
+    }
 }

@@ -1,5 +1,6 @@
 package fon.mas.novica.Faculty.Project.service;
 
+import fon.mas.novica.Faculty.Project.entity.LecturePlan;
 import fon.mas.novica.Faculty.Project.entity.Subject;
 import fon.mas.novica.Faculty.Project.repository.SubjectRepository;
 import jakarta.transaction.Transactional;
@@ -44,5 +45,11 @@ public class SubjectService {
         findById(subjectId);
 
         subjectRepository.deleteById(subjectId);
+    }
+
+    public Subject updateLecturePlan(Long subjectId, LecturePlan lecturePlan) throws FileNotFoundException {
+        Subject subject = findById(subjectId);
+        subject.createLecturePlan(lecturePlan.getPredavanja(), lecturePlan.getVezbe(), lecturePlan.getLaboratorija());
+        return subjectRepository.save(subject);
     }
 }
