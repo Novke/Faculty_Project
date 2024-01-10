@@ -14,6 +14,6 @@ public interface EngagementRepository extends JpaRepository<Engagement, Long> {
 
     public List<Engagement> findAllByMemberAndYear(Member member, int year);
     public List<Engagement> findAllBySubjectAndYear(Subject subject, int year);
-    public List<Engagement> findAllBySubjectAndMemberAndYear(Subject subject, Member member, int year);
+    public List<Engagement> findAllBySubjectAndMemberAndYearOrderByIdDesc(Subject subject, Member member, int year);
     public List<Engagement> findAllBySubjectDepartmentAndYear(Department department, int year);
 }

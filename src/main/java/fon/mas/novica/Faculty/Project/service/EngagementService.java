@@ -34,6 +34,11 @@ public class EngagementService {
         }
     }
 
+public Engagement findBySubjectMemberYear(Subject subject, Member member, int year) throws FileNotFoundException {
+        List<Engagement> engagements = engagementRepository.findAllBySubjectAndMemberAndYearOrderByIdDesc(subject, member, year);
+        if (engagements == null || engagements.isEmpty()) throw new FileNotFoundException("Member ID = " + member.getId() + " has no engagements for subject ID = " + subject.getId());
+        return engagements.get(0);
+    }
 
     public Engagement create(Engagement engagement){
         return engagementRepository.save(engagement);
@@ -63,7 +68,7 @@ public class EngagementService {
     }
 
     public List<Engagement> findAllBySubjectMemberYear(Subject subject, Member member, int year){
-        return engagementRepository.findAllBySubjectAndMemberAndYear(subject, member, year);
+        return engagementRepository.findAllBySubjectAndMemberAndYearOrderByIdDesc(subject, member, year);
     }
 
     public List<Engagement> findAllByDepartmentAndYear(Department department, int year){
