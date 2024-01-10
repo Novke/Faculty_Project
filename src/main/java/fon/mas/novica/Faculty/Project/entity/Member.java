@@ -33,6 +33,7 @@ public class Member {
     private Department department;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Engagement> engagements;
     @JsonIgnore
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

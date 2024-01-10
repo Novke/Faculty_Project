@@ -1,5 +1,6 @@
 package fon.mas.novica.Faculty.Project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,6 @@ public class Subject {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Department department;
     @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Engagement> lecturers;
 }
