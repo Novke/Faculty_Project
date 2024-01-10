@@ -33,6 +33,22 @@ public class EngagementController {
         return ResponseEntity.ok(engagementService.create(engagement));
     }
 
+    @PutMapping
+    public ResponseEntity<?> editEngagement(@RequestBody Engagement engagement) throws FileNotFoundException{
+        engagement.setMember(memberService.findById(engagement.getMember().getId()));
+        engagement.setSubject(subjectService.findById(engagement.getSubject().getId()));
+
+        return ResponseEntity.ok(engagementService.edit(engagement));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEngagement(@PathVariable Long id) throws FileNotFoundException {
+        engagementService.findById(id);
+
+        engagementService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/dept/{departmentId}/{year}")
     public ResponseEntity<?> findAllByDepartmentAndYear(@PathVariable Long departmentId,
                                                         @PathVariable int year) throws FileNotFoundException {
