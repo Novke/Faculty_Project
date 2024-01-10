@@ -25,4 +25,10 @@ public class Subject {
     @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Engagement> lecturers;
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "subject", cascade = CascadeType.ALL)
+    private LecturePlan lecturePlan;
+
+    public void createLecturePlan(int pred, int vezbe, int lab){
+        lecturePlan = new LecturePlan(this, vezbe, pred, lab);
+    }
 }
