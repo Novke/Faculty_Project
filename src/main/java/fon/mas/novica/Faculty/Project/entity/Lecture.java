@@ -24,6 +24,11 @@ public class Lecture {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private LectureSchedule schedule;
+    public Lecture(Engagement engagement, LectureForm format, LectureSchedule lectureSchedule){
+        this.engagement = engagement;
+        this.format = format;
+        this.schedule = lectureSchedule;
+    }
 
     public Member getTeacher(){
         return engagement.getMember();
