@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -27,6 +27,8 @@ public class Subject {
     private List<Engagement> lecturers;
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "subject", cascade = CascadeType.ALL)
     private LecturePlan lecturePlan;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
+    private Set<LectureSchedule> schedules;
 
     public void createLecturePlan(int pred, int vezbe, int lab){
         lecturePlan = new LecturePlan(this, vezbe, pred, lab);
@@ -34,5 +36,11 @@ public class Subject {
     public void setLecturePlan(LecturePlan lecturePlan){
         lecturePlan.setSubject(this);
         this.lecturePlan = lecturePlan;
+    }
+    public LectureSchedule getSchedule(int year){
+        for (LectureSchedule s : schedules){
+            if (s.getYear()==year) return s;
+        }
+        return null;
     }
 }
