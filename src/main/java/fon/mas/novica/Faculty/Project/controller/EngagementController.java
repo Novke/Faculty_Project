@@ -34,9 +34,7 @@ public class EngagementController {
     }
 
     @PutMapping
-    public ResponseEntity<?> editEngagement(@RequestBody Engagement engagement) throws FileNotFoundException{
-        engagement.setMember(memberService.findById(engagement.getMember().getId()));
-        engagement.setSubject(subjectService.findById(engagement.getSubject().getId()));
+    public ResponseEntity<?> editLectureForms(@RequestBody Engagement engagement) throws FileNotFoundException{
 
         return ResponseEntity.ok(engagementService.edit(engagement));
     }

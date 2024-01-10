@@ -39,10 +39,13 @@ public class EngagementService {
         return engagementRepository.save(engagement);
     }
 
-    public Engagement edit(Engagement engagement) throws FileNotFoundException {
-        findById(engagement.getId());
 
-        return engagementRepository.save(engagement);
+//samo moze lecture forms da se menja, za ostalo treba praviti novi engagement
+    public Engagement edit(Engagement engagement) throws FileNotFoundException {
+        Engagement returnedEngagement = findById(engagement.getId());
+        returnedEngagement.setLectureForms(engagement.getLectureForms());
+
+        return engagementRepository.save(returnedEngagement);
     }
 
     public void delete(Long engagementId) throws FileNotFoundException {
