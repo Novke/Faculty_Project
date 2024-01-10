@@ -1,5 +1,6 @@
 package fon.mas.novica.Faculty.Project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,8 @@ public class Lecture {
     private Engagement engagement;
     private LocalDateTime dateTime;
     private String subject;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private LectureSchedule schedule;
 
 }
