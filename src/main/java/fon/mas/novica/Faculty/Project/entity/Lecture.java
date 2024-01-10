@@ -17,12 +17,19 @@ public class Lecture {
     private long id;
 
     private LectureForm format;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Engagement engagement;
     private LocalDateTime dateTime;
-    private String subject;
+    private String title;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private LectureSchedule schedule;
+
+    public Member getTeacher(){
+        return engagement.getMember();
+    }
+    public Subject getSubject(){
+        return engagement.getSubject();
+    }
 
 }
