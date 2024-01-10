@@ -41,6 +41,14 @@ public Engagement findBySubjectMemberYear(Subject subject, Member member, int ye
     }
 
     public Engagement create(Engagement engagement){
+
+        //ako takav engagement za profesora u tom predmetu i godini vec postoji on taj overrajduje
+        Engagement existingEngagement = null;
+        try {
+            existingEngagement = findBySubjectMemberYear(engagement.getSubject(), engagement.getMember(), engagement.getYear());
+            engagement.setId(existingEngagement.getId());
+        } catch (FileNotFoundException ignored){}
+
         return engagementRepository.save(engagement);
     }
 
