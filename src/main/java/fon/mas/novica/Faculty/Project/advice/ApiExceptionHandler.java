@@ -1,5 +1,6 @@
 package fon.mas.novica.Faculty.Project.advice;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,6 +21,11 @@ public class ApiExceptionHandler {
     public ResponseEntity<ApiException> handleIllegalArgumentEx(IllegalArgumentException ex){
         ApiException apiException = new ApiException(ex.getMessage(), ZonedDateTime.now());
         return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(value = {DataIntegrityViolationException.class})
+    public ResponseEntity<ApiException> handleDataIntegrityEx(DataIntegrityViolationException ex){
+        ApiException apiException = new ApiException(ex.getMessage(), ZonedDateTime.now());
+        return new ResponseEntity<>(apiException, HttpStatus.FORBIDDEN);
     }
 
 }
