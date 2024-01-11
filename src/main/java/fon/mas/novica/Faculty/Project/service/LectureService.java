@@ -10,6 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +23,9 @@ import java.util.Optional;
 public class LectureService {
 
     private final LectureRepository lectureRepository;
+    private final SimpleDateFormat sdfDatum = new SimpleDateFormat("dd-MM-yyyy");
+    private final SimpleDateFormat sdfVreme = new SimpleDateFormat("HH-mm");
+
 
     public List<Lecture> findAll(){
         return lectureRepository.findAll();
@@ -58,5 +65,63 @@ public class LectureService {
     }
     public List<Lecture> findAllByMemberInYear(Member member, int year){
         return lectureRepository.findAllByEngagementMemberAndEngagementYear(member, year);
+    }
+
+    public Lecture updateDateTitle(Lecture lecture, String datumString, String vremeString, String title) {
+        if (title != null && !title.isBlank()) lecture.setTitle(title.replaceAll("_", " "));
+        Date vreme = null, datum = null;
+
+        try {
+            vreme = sdfVreme.parse(vremeString);
+        } catch (ParseException ignored){}
+
+        try {
+            datum = sdfDatum.parse(datumString);
+        } catch (ParseException ignored) {}
+
+        LocalDateTime oldDateTime = lecture.getDateTime();
+
+        if (oldDateTime==null){
+            if (datum == null) throw new IllegalArgumentException("Date must be provided when current lecture date is null");
+            if (vreme == null){
+                oldDateTime = LocalDateTime.of(
+                        datum.getYear()+1900,
+                        datum.getMonth()+1,
+                        datum.getDate(),
+                        0,
+                        0);
+            } else {
+                oldDateTime = LocalDateTime.of(
+                        datum.getYear() + 1900,
+                        datum.getMonth() + 1,
+                        datum.getDate(),
+                        vreme.getHours(),
+                        vreme.getMinutes());
+            }
+
+        } else {
+            //oldDate!=null
+            if (vreme != null){
+                oldDateTime = LocalDateTime.of(
+                        oldDateTime.getYear(),
+                        oldDateTime.getMonth(),
+                        oldDateTime.getDayOfMonth(),
+                        vreme.getHours(),
+                        vreme.getMinutes());
+            }
+            if (datum != null){
+                oldDateTime = LocalDateTime.of(
+                        datum.getYear()+1900,
+                        datum.getMonth() + 1,
+                        datum.getDate(),
+                        oldDateTime.getHour(),
+                        oldDateTime.getMinute()
+                );
+            }
+
+        }
+
+        lecture.setDateTime(oldDateTime);
+        return lectureRepository.save(lecture);
     }
 }

@@ -39,6 +39,15 @@ public class LectureController {
         return ResponseEntity.ok(lectureService.edit(lecture));
     }
 
+    @PatchMapping("/{lectureId}")
+    public ResponseEntity<?> updateDateTitle(@PathVariable Long lectureId,
+                                             @RequestParam(name = "date", defaultValue = "") String datumString,
+                                             @RequestParam(name = "time", defaultValue = "") String vremeString,
+                                             @RequestParam(name = "content", defaultValue = "") String title) throws FileNotFoundException {
+        Lecture lecture = lectureService.findById(lectureId);
+        return ResponseEntity.ok(lectureService.updateDateTitle(lecture, datumString, vremeString, title));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteLecture(@PathVariable Long id) throws FileNotFoundException {
         lectureService.findById(id);
