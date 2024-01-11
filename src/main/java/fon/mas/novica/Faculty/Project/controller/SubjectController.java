@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping(path = "/subject")
@@ -52,5 +53,16 @@ public class SubjectController {
     @PutMapping("/plan")
     public ResponseEntity<?> updateLecturePlan(@RequestBody Subject subject) throws FileNotFoundException {
         return ResponseEntity.ok(subjectService.updateLecturePlan(subject.getId(), subject.getLecturePlan()));
+    }
+
+    @PostMapping("/schedule/{year}")
+    public ResponseEntity<?> generateSchedulePlan(@RequestBody Subject subject,
+                                                  @PathVariable int year) throws FileNotFoundException {
+        return ResponseEntity.ok(subjectService.generateBlankSchedule(subject.getId(), year));
+    }
+    @PostMapping("/schedule")
+    public ResponseEntity<?> generateSchedulePlan(@RequestBody Subject subject) throws FileNotFoundException {
+        int year = LocalDate.now().getYear();
+        return ResponseEntity.ok(subjectService.generateBlankSchedule(subject.getId(), year));
     }
 }
