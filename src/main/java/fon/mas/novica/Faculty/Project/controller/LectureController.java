@@ -4,10 +4,7 @@ import fon.mas.novica.Faculty.Project.entity.Engagement;
 import fon.mas.novica.Faculty.Project.entity.Lecture;
 import fon.mas.novica.Faculty.Project.entity.Member;
 import fon.mas.novica.Faculty.Project.entity.Subject;
-import fon.mas.novica.Faculty.Project.service.EngagementService;
-import fon.mas.novica.Faculty.Project.service.LectureService;
-import fon.mas.novica.Faculty.Project.service.MemberService;
-import fon.mas.novica.Faculty.Project.service.SubjectService;
+import fon.mas.novica.Faculty.Project.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +21,15 @@ public class LectureController {
     private final EngagementService engagementService;
     private final SubjectService subjectService;
     private final MemberService memberService;
+    private final LectureScheduleService lectureScheduleService;
+
 
     @PostMapping
     public ResponseEntity<?> createLecture(@RequestBody Lecture lecture) throws FileNotFoundException {
         lecture.setEngagement(engagementService.findById(lecture.getEngagement().getId()));
+        if (lecture.getSchedule()!=null){
+            lecture.setSchedule(lectureScheduleService.findById(lecture.getSchedule().getId()));
+        }
 
         return ResponseEntity.ok(lectureService.create(lecture));
     }
