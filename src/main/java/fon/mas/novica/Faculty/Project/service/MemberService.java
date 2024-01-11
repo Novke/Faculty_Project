@@ -6,6 +6,7 @@ import fon.mas.novica.Faculty.Project.entity.Member;
 import fon.mas.novica.Faculty.Project.entity.ScientificField;
 import fon.mas.novica.Faculty.Project.repository.AcademicTitleHistoryRepository;
 import fon.mas.novica.Faculty.Project.repository.MemberRepository;
+import fon.mas.novica.Faculty.Project.validation.impl.MemberRules;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final AcademicTitleHistoryRepository academicTitleHistoryRepository;
+    private final MemberRules memberRules;
 
     public List<Member> findAll(){
         return memberRepository.findAll();
@@ -43,6 +45,7 @@ public class MemberService {
 //            member.setAcademicTitles(List.of(academicTitleHistoryRepository.save(titleHistory)));
             member.setAcademicTitles(List.of(titleHistory));
         }
+        memberRules.all(member);
 
         return memberRepository.save(member);
     }
@@ -53,6 +56,8 @@ public class MemberService {
         AcademicTitleHistory lastTitle = academicTitleHistoryRepository.findByMemberOrderByStartDateDescIdDesc(member).get(0);
         lastTitle.setScientificField(member.getScientificField());
         lastTitle.setAcademicTitle(member.getAcademicTitle());
+
+        memberRules.all(member);
 
         return memberRepository.save(member);
     }

@@ -5,6 +5,9 @@ import fon.mas.novica.Faculty.Project.entity.ManagerMandate;
 import fon.mas.novica.Faculty.Project.entity.Member;
 import fon.mas.novica.Faculty.Project.entity.SecretaryMandate;
 import fon.mas.novica.Faculty.Project.repository.DepartmentRepository;
+import fon.mas.novica.Faculty.Project.validation.impl.DepartmentRules;
+import fon.mas.novica.Faculty.Project.validation.impl.ManagerMandateRules;
+import fon.mas.novica.Faculty.Project.validation.impl.SecretaryMandateRules;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,9 @@ import java.util.Optional;
 public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
+    private final DepartmentRules departmentRules;
+    private final SecretaryMandateRules secretaryMandateRules;
+    private final ManagerMandateRules managerMandateRules;
 
     public List<Department> findAll() {
         return departmentRepository.findAll();
@@ -34,11 +40,13 @@ public class DepartmentService {
     }
 
     public Department create(Department department){
+        departmentRules.all(department);
         return departmentRepository.save(department);
     }
 
     public Department edit(Department department) throws FileNotFoundException {
         findById(department.getId()); //baca izuzetak ako ne postoji
+        departmentRules.all(department);
 
         return departmentRepository.save(department);
     }
@@ -57,6 +65,8 @@ public class DepartmentService {
         newMandate.setManager(member);
         newMandate.setStartDate(LocalDate.now());
 
+        managerMandateRules.all(newMandate);
+
         department.getManagerHistory().add(newMandate);
         departmentRepository.save(department); //cuva preko cascade
     }
@@ -68,6 +78,8 @@ public class DepartmentService {
         newMandate.setDepartment(department);
         newMandate.setSecretary(member);
         newMandate.setStartDate(LocalDate.now());
+
+        secretaryMandateRules.all(newMandate);
 
         department.getSecretaryHistory().add(newMandate);
         departmentRepository.save(department); //cuva preko cascade

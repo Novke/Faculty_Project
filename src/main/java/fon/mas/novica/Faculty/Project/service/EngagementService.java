@@ -5,6 +5,7 @@ import fon.mas.novica.Faculty.Project.entity.Engagement;
 import fon.mas.novica.Faculty.Project.entity.Member;
 import fon.mas.novica.Faculty.Project.entity.Subject;
 import fon.mas.novica.Faculty.Project.repository.EngagementRepository;
+import fon.mas.novica.Faculty.Project.validation.impl.EngagementRules;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class EngagementService {
 
     private final EngagementRepository engagementRepository;
+    private final EngagementRules engagementRules;
 
 
     public List<Engagement> findAll(){
@@ -49,6 +51,8 @@ public Engagement findBySubjectMemberYear(Subject subject, Member member, int ye
             engagement.setId(existingEngagement.getId());
         } catch (FileNotFoundException ignored){}
 
+        engagementRules.all(engagement);
+
         return engagementRepository.save(engagement);
     }
 
@@ -57,6 +61,8 @@ public Engagement findBySubjectMemberYear(Subject subject, Member member, int ye
     public Engagement edit(Engagement engagement) throws FileNotFoundException {
         Engagement returnedEngagement = findById(engagement.getId());
         returnedEngagement.setLectureForms(engagement.getLectureForms());
+
+        engagementRules.all(engagement);
 
         return engagementRepository.save(returnedEngagement);
     }

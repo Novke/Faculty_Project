@@ -5,6 +5,7 @@ import fon.mas.novica.Faculty.Project.repository.EngagementRepository;
 import fon.mas.novica.Faculty.Project.repository.LectureRepository;
 import fon.mas.novica.Faculty.Project.repository.LectureScheduleRepository;
 import fon.mas.novica.Faculty.Project.repository.SubjectRepository;
+import fon.mas.novica.Faculty.Project.validation.impl.SubjectRules;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,6 +23,7 @@ public class SubjectService {
     private final EngagementRepository engagementRepository;
     private final LectureRepository lectureRepository;
     private final LectureScheduleRepository lectureScheduleRepository;
+    private final SubjectRules subjectRules;
 
     public List<Subject> findAll(){
         return subjectRepository.findAll();
@@ -38,12 +40,14 @@ public class SubjectService {
     }
 
     public Subject create(Subject subject){
+        subjectRules.all(subject);
         return subjectRepository.save(subject);
     }
 
     public Subject edit(Subject subject) throws FileNotFoundException {
         findById(subject.getId());
 
+        subjectRules.all(subject);
         return subjectRepository.save(subject);
     }
 

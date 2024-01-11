@@ -5,6 +5,7 @@ import fon.mas.novica.Faculty.Project.entity.Lecture;
 import fon.mas.novica.Faculty.Project.entity.Member;
 import fon.mas.novica.Faculty.Project.entity.Subject;
 import fon.mas.novica.Faculty.Project.repository.LectureRepository;
+import fon.mas.novica.Faculty.Project.validation.impl.LectureRules;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.util.Optional;
 public class LectureService {
 
     private final LectureRepository lectureRepository;
+    private final LectureRules lectureRules;
     private final SimpleDateFormat sdfDatum = new SimpleDateFormat("dd-MM-yyyy");
     private final SimpleDateFormat sdfVreme = new SimpleDateFormat("HH-mm");
 
@@ -41,11 +43,14 @@ public class LectureService {
     }
 
     public Lecture create(Lecture lecture){
+        lectureRules.all(lecture);
         return lectureRepository.save(lecture);
     }
 
     public Lecture edit(Lecture lecture) throws FileNotFoundException {
         findById(lecture.getId());
+
+        lectureRules.all(lecture);
 
         return lectureRepository.save(lecture);
     }
