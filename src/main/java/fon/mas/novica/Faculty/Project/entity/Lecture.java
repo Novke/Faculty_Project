@@ -17,7 +17,8 @@ public class Lecture {
     private long id;
 
     private LectureForm format;
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     private Engagement engagement;
     private LocalDateTime dateTime;
     private String title;

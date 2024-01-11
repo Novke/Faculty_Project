@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fon.mas.novica.Faculty.Project.serialization.serializers.DepartmentSerializer;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -13,10 +14,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @JsonSerialize(using = DepartmentSerializer.class)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     private long id;
     @Column
     private String name;
