@@ -23,11 +23,19 @@ public class LectureController {
     private final MemberService memberService;
     private final LectureScheduleService lectureScheduleService;
 
+    @GetMapping("/{lectureId}")
+    public ResponseEntity<?> getSingleLecture(@PathVariable Long lectureId) throws FileNotFoundException {
+        return ResponseEntity.ok(lectureService.findById(lectureId));
+    }
 
     @PostMapping
     public ResponseEntity<?> createLecture(@RequestBody Lecture lecture) throws FileNotFoundException {
-        lecture.setEngagement(engagementService.findById(lecture.getEngagement().getId()));
-        if (lecture.getSchedule()!=null){
+        if (lecture.getEngagement()!=null){
+            lecture.setEngagement(engagementService.findById(lecture.getEngagement().getId()));
+        } else {
+            throw new IllegalArgumentException("Engagement not set for the lecture");
+        }
+        if (lecture.getSchedule()!=null){ //ne mora biti vezan za schedule
             lecture.setSchedule(lectureScheduleService.findById(lecture.getSchedule().getId()));
         }
 
