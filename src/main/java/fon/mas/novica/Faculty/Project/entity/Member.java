@@ -27,11 +27,6 @@ public class Member {
     private EducationTitle educationTitle;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private ScientificField scientificField;
-
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<MemberTitle> titleHistory;
-
     @JoinColumn(name = "department_id")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Department department;
