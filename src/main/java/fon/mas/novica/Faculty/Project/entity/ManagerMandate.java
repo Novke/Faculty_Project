@@ -21,4 +21,5 @@ public class ManagerMandate {
     @ManyToOne(fetch = FetchType.EAGER)
     private Department department;
     private LocalDate startDate;
+    private LocalDate endDate;
 }
