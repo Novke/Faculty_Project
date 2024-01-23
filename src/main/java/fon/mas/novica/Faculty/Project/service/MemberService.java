@@ -74,8 +74,10 @@ public class MemberService {
         if (vracenMember.getAcademicTitle().getId() == newTitle.getId()) throw new IllegalArgumentException("Can't promote member to same academic title");
 
         List<AcademicTitleHistory> titles = academicTitleHistoryRepository.findByMemberOrderByStartDateDescIdDesc(vracenMember);
-        AcademicTitleHistory lastTitle = titles.get(0);
-        lastTitle.setEndDate(LocalDate.now());
+        if (titles!=null && !titles.isEmpty()) {
+            AcademicTitleHistory lastTitle = titles.get(0);
+            lastTitle.setEndDate(LocalDate.now());
+        }
 
 //        if (newField == null) newField = vracenMember.getScientificField(); //NEMA POTREBE SVAKAKO JE newField IZVUCEN IZ BAZE
 
