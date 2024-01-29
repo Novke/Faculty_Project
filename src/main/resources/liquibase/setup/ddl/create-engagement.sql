@@ -3,7 +3,7 @@ CREATE TABLE Engagement (
                             member_id BIGINT,
                             subject_id BIGINT,
                             year INT,
-                            lectureForms VARCHAR(255),
+                            lecture_Forms VARCHAR(255),
                             FOREIGN KEY (member_id) REFERENCES Member(id),
                             FOREIGN KEY (subject_id) REFERENCES Subject(id)
 );
