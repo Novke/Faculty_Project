@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Lecture {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private LectureForm format;

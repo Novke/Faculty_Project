@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class ManagerMandate {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne(fetch = FetchType.EAGER)
     private Member manager;

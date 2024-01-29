@@ -14,7 +14,7 @@ import java.util.List;
 public class LectureSchedule {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @EqualsAndHashCode.Include

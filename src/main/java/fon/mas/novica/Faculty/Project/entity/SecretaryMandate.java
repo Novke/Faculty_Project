@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class SecretaryMandate {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne(fetch = FetchType.EAGER)
     private Member secretary;

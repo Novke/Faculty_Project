@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class AcademicTitleHistory {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Member member;

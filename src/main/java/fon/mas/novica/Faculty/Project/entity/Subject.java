@@ -19,7 +19,7 @@ import java.util.Set;
 public class Subject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private long id;
     @EqualsAndHashCode.Include
