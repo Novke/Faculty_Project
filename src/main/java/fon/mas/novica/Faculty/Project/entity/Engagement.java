@@ -23,7 +23,7 @@ public class Engagement {
     private Subject subject;
     private int year;
     //TODO: check
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private Set<LectureForm> lectureForms;
     @OneToMany(mappedBy = "engagement", fetch = FetchType.LAZY)
     @JsonIgnore

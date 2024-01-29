@@ -16,6 +16,7 @@ public class Lecture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Enumerated(EnumType.STRING)
     private LectureForm format;
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
