@@ -24,11 +24,13 @@ public class SubjectSerializer extends JsonSerializer<Subject> {
         jsonGenerator.writeEndObject();
 
         LecturePlan plan = subject.getLecturePlan();
-        jsonGenerator.writeObjectFieldStart("lecturePlan");
-        jsonGenerator.writeNumberField("predavanja", plan.getPredavanja());
-        jsonGenerator.writeNumberField("vezbe", plan.getVezbe());
-        jsonGenerator.writeNumberField("laboratorija", plan.getLaboratorija());
-        jsonGenerator.writeEndObject();
+        if (plan!=null) {
+            jsonGenerator.writeObjectFieldStart("lecturePlan");
+            jsonGenerator.writeNumberField("predavanja", plan.getPredavanja());
+            jsonGenerator.writeNumberField("vezbe", plan.getVezbe());
+            jsonGenerator.writeNumberField("laboratorija", plan.getLaboratorija());
+            jsonGenerator.writeEndObject();
+        }
 
         List<Engagement> lecturers = subject.getLecturers();
         jsonGenerator.writeArrayFieldStart("lecturers");

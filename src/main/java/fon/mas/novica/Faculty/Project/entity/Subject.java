@@ -51,6 +51,7 @@ public class Subject {
     }
 
     public LectureSchedule getLatestSchedule(){
+        if (schedules == null || schedules.isEmpty()) return null;
         int max = 0;
         LectureSchedule schedule = null;
         for (LectureSchedule s : schedules){
