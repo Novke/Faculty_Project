@@ -36,8 +36,14 @@ public class Department {
     @OneToOne
     private Member secretary;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "secretary_mandate",
+            joinColumns = @JoinColumn(name = "department_id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
     private List<SecretaryMandate> secretaryHistory;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "manager_mandate",
+            joinColumns = @JoinColumn(name = "department_id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
     private List<ManagerMandate> managerHistory;
 
 }

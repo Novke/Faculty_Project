@@ -5,6 +5,8 @@ import fon.mas.novica.Faculty.Project.entity.ManagerMandate;
 import fon.mas.novica.Faculty.Project.entity.Member;
 import fon.mas.novica.Faculty.Project.entity.SecretaryMandate;
 import fon.mas.novica.Faculty.Project.repository.DepartmentRepository;
+import fon.mas.novica.Faculty.Project.repository.ManagerMandateRepository;
+import fon.mas.novica.Faculty.Project.repository.SecretaryMandateRepository;
 import fon.mas.novica.Faculty.Project.validation.impl.DepartmentRules;
 import fon.mas.novica.Faculty.Project.validation.impl.ManagerMandateRules;
 import fon.mas.novica.Faculty.Project.validation.impl.SecretaryMandateRules;
@@ -24,6 +26,8 @@ public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
     private final DepartmentRules departmentRules;
+    private final ManagerMandateRepository managerMandateRepository;
+    private final SecretaryMandateRepository secretaryMandateRepository;
     private final SecretaryMandateRules secretaryMandateRules;
     private final ManagerMandateRules managerMandateRules;
 
@@ -67,8 +71,10 @@ public class DepartmentService {
 
         managerMandateRules.all(newMandate);
 
-        department.getManagerHistory().add(newMandate);
-        departmentRepository.save(department); //cuva preko cascade
+//        department.getManagerHistory().add(newMandate);
+//        departmentRepository.save(department); //cuva preko cascade
+
+        managerMandateRepository.save(newMandate);
     }
 
     public void assignNewSecretary(Department department, Member member){
@@ -81,7 +87,9 @@ public class DepartmentService {
 
         secretaryMandateRules.all(newMandate);
 
-        department.getSecretaryHistory().add(newMandate);
-        departmentRepository.save(department); //cuva preko cascade
+//        department.getSecretaryHistory().add(newMandate);
+//        departmentRepository.save(department); //cuva preko cascade
+
+        secretaryMandateRepository.save(newMandate);
     }
 }
