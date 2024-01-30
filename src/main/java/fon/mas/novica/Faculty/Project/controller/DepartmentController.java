@@ -1,7 +1,9 @@
 package fon.mas.novica.Faculty.Project.controller;
 
 import fon.mas.novica.Faculty.Project.entity.Department;
+import fon.mas.novica.Faculty.Project.entity.ManagerMandate;
 import fon.mas.novica.Faculty.Project.entity.Member;
+import fon.mas.novica.Faculty.Project.entity.SecretaryMandate;
 import fon.mas.novica.Faculty.Project.service.DepartmentService;
 import fon.mas.novica.Faculty.Project.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +61,35 @@ public class DepartmentController {
         departmentService.assignNewSecretary(department, vracenMember);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping(path = "/{id}/manager")
+    public ResponseEntity<?> editManagerMandate(@RequestBody ManagerMandate mandate, @PathVariable Long id) throws FileNotFoundException {
+        Department department = departmentService.findById(id);
+        departmentService.editManagerMandate(department, mandate);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(path = "/{id}/secretary")
+    public ResponseEntity<?> editSecretaryMandate(@RequestBody SecretaryMandate mandate, @PathVariable Long id) throws FileNotFoundException {
+        Department department = departmentService.findById(id);
+        departmentService.editSecretaryMandate(department, mandate);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping(path = "/{id}/manager")
+    public ResponseEntity<?> deleteManagerMandate(@RequestBody ManagerMandate mandate, @PathVariable Long id) throws FileNotFoundException {
+        Department department = departmentService.findById(id);
+        departmentService.deleteManagerMandate(department, mandate);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping(path = "/{id}/secretary")
+    public ResponseEntity<?> deleteSecretaryMandate(@RequestBody SecretaryMandate mandate, @PathVariable Long id) throws FileNotFoundException {
+        Department department = departmentService.findById(id);
+        departmentService.deleteSecretaryMandate(department, mandate);
+        return ResponseEntity.ok().build();
+    }
+
+
 
 }
