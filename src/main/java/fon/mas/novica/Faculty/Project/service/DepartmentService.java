@@ -105,12 +105,17 @@ public class DepartmentService {
         secretaryMandateRepository.save(mandate);
     }
 
-    public void deleteManagerMandate(Department department, ManagerMandate mandate) {
+    public void deleteManagerMandate(Department department, ManagerMandate mandate) throws FileNotFoundException {
+        ManagerMandate oldMandate = managerMandateRepository.findById(mandate.getId()).orElseThrow(() -> new FileNotFoundException("Mandate with ID = " + mandate.getId() + " does not exist!"));
+        if (oldMandate.getDepartment().getId() != department.getId()) throw new FileNotFoundException("Mandate with ID = " + mandate.getId() + " does not belong to department with ID = " + department.getId());
         department.getManagerHistory().remove(mandate);
         departmentRepository.save(department);
     }
 
-    public void deleteSecretaryMandate(Department department, SecretaryMandate mandate) {
+    public void deleteSecretaryMandate(Department department, SecretaryMandate mandate) throws FileNotFoundException {
+        //same check from the above function
+        SecretaryMandate oldMandate = secretaryMandateRepository.findById(mandate.getId()).orElseThrow(() -> new FileNotFoundException("Mandate with ID = " + mandate.getId() + " does not exist!"));
+        if (oldMandate.getDepartment().getId() != department.getId()) throw new FileNotFoundException("Mandate with ID = " + mandate.getId() + " does not belong to department with ID = " + department.getId());
         department.getSecretaryHistory().remove(mandate);
         departmentRepository.save(department);
     }
